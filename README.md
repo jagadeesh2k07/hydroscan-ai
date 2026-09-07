@@ -7,7 +7,7 @@ predicts **Safe / Caution / Unsafe** — with a full, genuine explanation of
 
 Explainability is the point of this project, not model complexity: a
 lightweight RandomForest + SHAP is used deliberately so every prediction can
-be attributed, in plain English, back to the parameters that produced it.
+be attributed, in plain English, back to the parameters that produced it. 
 
 ---
 
