@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found — HydroScan AI{% endblock %}
+{% block content %}
+<section class="login-wrap">
+  <div class="card login-card">
+    <h1>404</h1>
+    <p class="card-subtitle">This page doesn't exist.</p>
+    <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary">Back to Dashboard</a>
+  </div>
+</section>
+{% endblock %}

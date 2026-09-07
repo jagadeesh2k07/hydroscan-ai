@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero">
+  <div class="hero-text">
+    <span class="eyebrow">Explainable AI &middot; Water Quality</span>
+    <h1>Know your water. <span class="grad-text">Understand why.</span></h1>
+    <p>Enter your test readings — or scan a test strip — and HydroScan AI tells you not just
+       Safe, Caution, or Unsafe, but exactly which parameter drove that call and what to do next.</p>
+  </div>
+</section>
+
+<section class="workspace">
+
+  <!-- ============================= INPUT CARD ============================= -->
+  <div class="card input-card">
+    <div class="tabs" role="tablist">
+      <button class="tab is-active" data-tab="manual" role="tab" aria-selected="true">Manual Entry</button>
+      <button class="tab" data-tab="strip" role="tab" aria-selected="false">Strip Scan</button>
+    </div>
+
+    <!-- ---- Manual entry panel ---- -->
+    <div class="tab-panel is-active" data-panel="manual">
+      <form id="predictForm" autocomplete="off">
+        <div class="field-grid">
+          <label class="field">
+            <span class="field-label">pH <em>(0&ndash;14)</em></span>
+            <input type="number" step="0.01" min="0" max="14" name="ph" id="f_ph" placeholder="7.20" required>
+          </label>
+          <label class="field">
+            <span class="field-label">Chlorine <em>(mg/L)</em></span>
+            <input type="number" step="0.01" min="0" max="10" name="chlorine" id="f_chlorine" placeholder="0.90" required>
+          </label>
+          <label class="field">
+            <span class="field-label">Hardness <em>(ppm)</em></span>
+            <input type="number" step="0.1" min="0" max="1000" name="hardness" id="f_hardness" placeholder="120" required>
+          </label>
+          <label class="field">
+            <span class="field-label">Nitrate <em>(mg/L)</em></span>
+            <input type="number" step="0.01" min="0" max="200" name="nitrate" id="f_nitrate" placeholder="6.5" required>
+          </label>
+        </div>
+        <label class="field field--full">
+          <span class="field-label">Sample label <em>(optional)</em></span>
+          <input type="text" name="sample_label" id="f_label" maxlength="120" placeholder="e.g. Kitchen tap, Backyard well…">
+        </label>
+
+        <div id="formErrors" class="form-errors" hidden></div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="analyzeBtn">
+          <span class="btn-label">Analyze Water Quality</span>
+          <span class="btn-spinner" hidden></span>
+        </button>
+      </form>
+    </div>
+
+    <!-- ---- Strip scan panel ---- -->
+    <div class="tab-panel" data-panel="strip">
+      <div class="strip-upload" id="stripDrop">
+        <input type="file" id="stripFile" accept="image/png,image/jpeg,image/webp" hidden>
+        <div class="strip-upload-inner" id="stripUploadPrompt">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4M12 4l-4 4M12 4l4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <p><strong>Upload or capture</strong> a photo of your 4-pad test strip</p>
+          <span class="muted-note">JPG, PNG or WEBP &middot; well-lit, strip against a plain background works best</span>
+          <div class="strip-upload-actions">
+            <button type="button" class="btn btn-secondary" id="stripChooseBtn">Choose photo</button>
+          </div>
+        </div>
+        <img id="stripPreviewImg" alt="Uploaded strip preview" hidden>
+      </div>
+
+      <div id="stripScanning" class="strip-scanning" hidden>
+        <div class="scan-bar"><div class="scan-bar-fill"></div></div>
+        <span>Analyzing pad colors with OpenCV&hellip;</span>
+      </div>
+
+      <div id="stripResult" class="strip-result" hidden>
+        <div class="strip-confidence-row">
+          <span class="strip-confidence-badge" id="stripConfidenceBadge">Confidence: 0%</span>
+        </div>
+        <p class="strip-result-note" id="stripNote"></p>
+        <div class="pad-strip" id="padStrip"></div>
+        <p class="muted-note">Estimated values have been filled into the form below. Review and edit before analyzing.</p>
+        <div class="field-grid">
+          <label class="field">
+            <span class="field-label">pH</span>
+            <input type="number" step="0.01" min="0" max="14" id="s_ph">
+          </label>
+          <label class="field">
+            <span class="field-label">Chlorine <em>(mg/L)</em></span>
+            <input type="number" step="0.01" min="0" max="10" id="s_chlorine">
+          </label>
+          <label class="field">
+            <span class="field-label">Hardness <em>(ppm)</em></span>
+            <input type="number" step="0.1" min="0" max="1000" id="s_hardness">
+          </label>
+          <label class="field">
+            <span class="field-label">Nitrate <em>(mg/L)</em></span>
+            <input type="number" step="0.01" min="0" max="200" id="s_nitrate">
+          </label>
+        </div>
+        <label class="field field--full">
+          <span class="field-label">Sample label <em>(optional)</em></span>
+          <input type="text" id="s_label" maxlength="120" placeholder="e.g. Kitchen tap, Backyard well…">
+        </label>
+        <div id="stripFormErrors" class="form-errors" hidden></div>
+        <button type="button" class="btn btn-primary btn-block" id="analyzeStripBtn">
+          <span class="btn-label">Analyze Water Quality</span>
+          <span class="btn-spinner" hidden></span>
+        </button>
+      </div>
+
+      <div id="stripError" class="form-errors" hidden></div>
+    </div>
+  </div>
+
+  <!-- ============================= RESULTS PANEL ============================= -->
+  <div class="results-col">
+
+    <div class="card results-empty" id="resultsEmpty">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2C12 2 5 10.5 5 15a7 7 0 0 0 14 0c0-4.5-7-13-7-13Z" stroke-linejoin="round"/></svg>
+      <h3>No analysis yet</h3>
+      <p>Enter your water parameters or scan a test strip to see a full explainable-AI breakdown.</p>
+    </div>
+
+    <div id="resultsPanel" class="results-panel" hidden>
+
+      <!-- Prediction banner -->
+      <div class="card prediction-banner" id="predictionBanner">
+        <div class="prediction-main">
+          <span class="prediction-label" id="predictionLabel">SAFE</span>
+          <p class="prediction-summary" id="predictionSummary"></p>
+        </div>
+        <div class="confidence-ring-wrap">
+          <svg class="confidence-ring" viewBox="0 0 120 120" width="104" height="104">
+            <circle cx="60" cy="60" r="52" class="ring-track"/>
+            <circle cx="60" cy="60" r="52" class="ring-fill" id="ringFill"/>
+          </svg>
+          <div class="confidence-ring-text">
+            <span id="confidenceValue">0%</span>
+            <small>confidence</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Risk indicator track -->
+      <div class="card risk-track-card">
+        <h3 class="card-title">Risk Indicator</h3>
+        <div class="risk-track">
+          <div class="risk-track-bar">
+            <span class="risk-zone risk-zone--safe">Safe</span>
+            <span class="risk-zone risk-zone--caution">Caution</span>
+            <span class="risk-zone risk-zone--unsafe">Unsafe</span>
+          </div>
+          <div class="risk-marker" id="riskMarker"></div>
+        </div>
+      </div>
+
+      <!-- Parameter cards -->
+      <div class="card">
+        <h3 class="card-title">Measured Parameters</h3>
+        <div class="param-grid" id="paramGrid"></div>
+      </div>
+
+      <!-- Attribution Spectrum (signature element) -->
+      <div class="card">
+        <h3 class="card-title">Feature Importance &mdash; Attribution Spectrum</h3>
+        <p class="card-subtitle">Each segment is sized by how much that parameter drove this specific result — like reading a strip's own pads, but for the AI's reasoning.</p>
+        <div class="attribution-spectrum" id="attributionSpectrum"></div>
+        <ul class="attribution-legend" id="attributionLegend"></ul>
+      </div>
+
+      <!-- XAI panel -->
+      <div class="card xai-panel">
+        <h3 class="card-title">Explainable AI &mdash; Why This Result</h3>
+        <ol class="reasons-list" id="reasonsList"></ol>
+      </div>
+
+      <!-- Causes -->
+      <div class="card" id="causesCard">
+        <h3 class="card-title">Probable Causes</h3>
+        <ul class="bullet-list" id="causesList"></ul>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="card">
+        <h3 class="card-title">Recommendations</h3>
+        <ul class="check-list" id="recommendationsList"></ul>
+      </div>
+
+      <!-- Summary + actions -->
+      <div class="card summary-card">
+        <h3 class="card-title">Analysis Summary</h3>
+        <dl class="summary-dl" id="summaryDl"></dl>
+        <div class="summary-actions">
+          <button class="btn btn-primary" id="downloadReportBtn">Download PDF Report</button>
+          <button class="btn btn-secondary" id="newAnalysisBtn">New Analysis</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

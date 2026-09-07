@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}HydroScan AI — Explainable Water Quality Analysis{% endblock %}</title>
+<link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% block head_extra %}{% endblock %}
+</head>
+<body>
+<div class="bg-orbs" aria-hidden="true"></div>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="{{ url_for('main.dashboard') }}" class="nav-brand">
+      <span class="nav-logo-badge">
+        <img src="{{ url_for('static', filename='images/icon.png') }}" alt="HydroScan AI logo" class="nav-logo-img">
+      </span>
+      <span class="nav-wordmark">HydroScan<em>AI</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="{{ url_for('main.dashboard') }}" class="nav-link {{ 'is-active' if request.endpoint == 'main.dashboard' }}">Dashboard</a>
+      <a href="{{ url_for('main.history_page') }}" class="nav-link {{ 'is-active' if request.endpoint == 'main.history_page' }}">History</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<main class="app-shell">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>HydroScan AI &mdash; Explainable Water Quality Analysis System</span>
+    <span class="footer-disclaimer">Educational/portfolio tool. Not a certified laboratory analysis.</span>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
