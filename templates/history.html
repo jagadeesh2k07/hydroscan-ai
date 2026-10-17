@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}History — HydroScan AI{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <h1>Analysis History</h1>
+  <p>Every water sample you've analyzed, with its prediction and confidence.</p>
+</section>
+
+<section class="card history-toolbar">
+  <div class="filter-group">
+    <button class="chip is-active" data-filter="">All</button>
+    <button class="chip" data-filter="Safe">Safe</button>
+    <button class="chip" data-filter="Caution">Caution</button>
+    <button class="chip" data-filter="Unsafe">Unsafe</button>
+  </div>
+</section>
+
+<section class="card" id="historyListCard">
+  <div id="historyEmpty" class="results-empty" hidden>
+    <h3>No analyses yet</h3>
+    <p>Run your first water quality analysis from the Dashboard.</p>
+  </div>
+  <div class="history-list" id="historyList"></div>
+  <div class="history-pagination">
+    <button class="btn btn-secondary" id="loadMoreBtn" hidden>Load more</button>
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+{% endblock %}

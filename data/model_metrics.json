@@ -1,0 +1,68 @@
+{
+  "accuracy": 0.9375,
+  "n_records": 1200,
+  "n_train": 960,
+  "n_test": 240,
+  "classes": [
+    "Caution",
+    "Safe",
+    "Unsafe"
+  ],
+  "confusion_matrix": [
+    [
+      65,
+      4,
+      1
+    ],
+    [
+      6,
+      83,
+      1
+    ],
+    [
+      1,
+      2,
+      77
+    ]
+  ],
+  "classification_report": {
+    "Caution": {
+      "precision": 0.9027777777777778,
+      "recall": 0.9285714285714286,
+      "f1-score": 0.9154929577464789,
+      "support": 70.0
+    },
+    "Safe": {
+      "precision": 0.9325842696629213,
+      "recall": 0.9222222222222223,
+      "f1-score": 0.9273743016759777,
+      "support": 90.0
+    },
+    "Unsafe": {
+      "precision": 0.9746835443037974,
+      "recall": 0.9625,
+      "f1-score": 0.9685534591194969,
+      "support": 80.0
+    },
+    "accuracy": 0.9375,
+    "macro avg": {
+      "precision": 0.9366818639148322,
+      "recall": 0.9377645502645503,
+      "f1-score": 0.9371402395139844,
+      "support": 240.0
+    },
+    "weighted avg": {
+      "precision": 0.9379238010767132,
+      "recall": 0.9375,
+      "f1-score": 0.9376352955110469,
+      "support": 240.0
+    }
+  },
+  "global_importance": {
+    "ph": 0.15650050018805958,
+    "chlorine": 0.07386110732810933,
+    "hardness": 0.39764547244966686,
+    "nitrate": 0.37199292003416423
+  },
+  "dataset_path": "C:\\xampp\\htdocs\\hydroscan-ai\\data\\water_quality_dataset.csv"
+}
