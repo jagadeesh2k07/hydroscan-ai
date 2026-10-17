@@ -1,0 +1,91 @@
+{
+  "type": "series_sigmoid",
+  "features": [
+    "ln_aspect",
+    "coverage",
+    "ln_edge_width",
+    "ln_noise",
+    "exposure",
+    "pad_texture",
+    "ln_pad_distinctiveness",
+    "ln_gap_contrast",
+    "edge_contrast"
+  ],
+  "mean": [
+    1.6840354483540039,
+    0.10354346733187773,
+    0.8533270395700656,
+    0.6857432709850616,
+    0.5761315067105547,
+    6.27458273793939,
+    3.346651427985232,
+    3.0769083480849337,
+    0.2552015293013161
+  ],
+  "std": [
+    0.28047683528822437,
+    0.054631461016284105,
+    0.665432672674206,
+    0.7687829898436948,
+    0.1990611730027832,
+    8.442739075571058,
+    0.9336224291034881,
+    1.0104381001224587,
+    0.15669277999462752
+  ],
+  "a": [
+    12.0,
+    12.0,
+    4.460329492237913,
+    12.0,
+    12.0,
+    4.007186434582614,
+    12.0,
+    4.621505707819911,
+    12.0
+  ],
+  "b": [
+    0.0,
+    0.0,
+    -2.4618040663803593,
+    -5.250133923732383,
+    10.062691693773242,
+    -1.5981861198689993,
+    0.0,
+    3.9169531209767814,
+    0.0
+  ],
+  "fit": {
+    "n_images_generated": 1800,
+    "n_passed_gates": 1346,
+    "n_valid": 868,
+    "n_invalid": 478,
+    "seed": 1000,
+    "l1_penalty": 0.0001,
+    "cv_nll_by_penalty": {
+      "0.01": 0.2212,
+      "0.001": 0.1904,
+      "0.0001": 0.1891,
+      "1e-05": 0.1896
+    },
+    "converged": true
+  },
+  "dev_summary": {
+    "corpus": "500+500 development photos (seed 2000)",
+    "true_accept_rate": 0.918,
+    "false_accept_rate": 0.04,
+    "precision": 0.9582,
+    "overall_accuracy": 0.939,
+    "roc_auc": 0.9797,
+    "ece": 0.0439
+  },
+  "validation_summary": {
+    "corpus": "500 valid + 500 invalid FINAL-TEST synthetic photos (seed 3000, never used for any design decision)",
+    "true_accept_rate": 0.924,
+    "false_accept_rate": 0.064,
+    "precision": 0.9352,
+    "overall_accuracy": 0.93,
+    "roc_auc": 0.9829,
+    "ece": 0.0523
+  }
+}

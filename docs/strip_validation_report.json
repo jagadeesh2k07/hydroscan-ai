@@ -1,0 +1,167 @@
+{
+  "n_valid": 500,
+  "n_invalid": 500,
+  "threshold": 0.6,
+  "confusion": {
+    "TP": 462,
+    "FP": 32,
+    "FN": 38,
+    "TN": 468
+  },
+  "true_accept_rate": 0.924,
+  "false_accept_rate": 0.064,
+  "precision": 0.9352,
+  "overall_accuracy": 0.93,
+  "model_only": {
+    "n": 761,
+    "roc_auc": 0.9829,
+    "brier": 0.0561,
+    "ece": 0.0523,
+    "reliability_table": [
+      {
+        "bin": "0.0-0.1",
+        "n": 187,
+        "mean_predicted_P": 0.008,
+        "observed_valid_fraction": 0.037
+      },
+      {
+        "bin": "0.1-0.2",
+        "n": 22,
+        "mean_predicted_P": 0.146,
+        "observed_valid_fraction": 0.136
+      },
+      {
+        "bin": "0.2-0.3",
+        "n": 16,
+        "mean_predicted_P": 0.235,
+        "observed_valid_fraction": 0.312
+      },
+      {
+        "bin": "0.3-0.4",
+        "n": 14,
+        "mean_predicted_P": 0.341,
+        "observed_valid_fraction": 0.214
+      },
+      {
+        "bin": "0.4-0.5",
+        "n": 17,
+        "mean_predicted_P": 0.445,
+        "observed_valid_fraction": 0.294
+      },
+      {
+        "bin": "0.5-0.6",
+        "n": 11,
+        "mean_predicted_P": 0.539,
+        "observed_valid_fraction": 0.455
+      },
+      {
+        "bin": "0.6-0.7",
+        "n": 15,
+        "mean_predicted_P": 0.646,
+        "observed_valid_fraction": 0.333
+      },
+      {
+        "bin": "0.7-0.8",
+        "n": 16,
+        "mean_predicted_P": 0.749,
+        "observed_valid_fraction": 0.375
+      },
+      {
+        "bin": "0.8-0.9",
+        "n": 27,
+        "mean_predicted_P": 0.849,
+        "observed_valid_fraction": 0.593
+      },
+      {
+        "bin": "0.9-1.0",
+        "n": 436,
+        "mean_predicted_P": 0.975,
+        "observed_valid_fraction": 0.998
+      }
+    ]
+  },
+  "per_kind": {
+    "blobs": {
+      "n": 44,
+      "accepted": 0,
+      "gate_rejected": 31,
+      "accept_rate": 0.0
+    },
+    "blurred_strip": {
+      "n": 42,
+      "accepted": 4,
+      "gate_rejected": 2,
+      "accept_rate": 0.0952
+    },
+    "dark_strip": {
+      "n": 40,
+      "accepted": 0,
+      "gate_rejected": 1,
+      "accept_rate": 0.0
+    },
+    "flat": {
+      "n": 42,
+      "accepted": 0,
+      "gate_rejected": 41,
+      "accept_rate": 0.0
+    },
+    "gradient": {
+      "n": 43,
+      "accepted": 0,
+      "gate_rejected": 40,
+      "accept_rate": 0.0
+    },
+    "low_contrast_strip": {
+      "n": 40,
+      "accepted": 0,
+      "gate_rejected": 32,
+      "accept_rate": 0.0
+    },
+    "noise": {
+      "n": 41,
+      "accepted": 0,
+      "gate_rejected": 41,
+      "accept_rate": 0.0
+    },
+    "noisy_strip": {
+      "n": 41,
+      "accepted": 0,
+      "gate_rejected": 2,
+      "accept_rate": 0.0
+    },
+    "textured_pads": {
+      "n": 40,
+      "accepted": 25,
+      "gate_rejected": 0,
+      "accept_rate": 0.625
+    },
+    "tiny_strip": {
+      "n": 40,
+      "accepted": 0,
+      "gate_rejected": 32,
+      "accept_rate": 0.0
+    },
+    "two_tone_bar": {
+      "n": 43,
+      "accepted": 2,
+      "gate_rejected": 2,
+      "accept_rate": 0.0465
+    },
+    "uniform_bar": {
+      "n": 44,
+      "accepted": 1,
+      "gate_rejected": 5,
+      "accept_rate": 0.0227
+    },
+    "valid": {
+      "n": 500,
+      "accepted": 462,
+      "gate_rejected": 10,
+      "accept_rate": 0.924
+    }
+  },
+  "gate_rejections": {
+    "no_strip": 239
+  },
+  "source": "synthetic held-out corpus (seed=3000)"
+}

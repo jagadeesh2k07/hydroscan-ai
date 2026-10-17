@@ -1,0 +1,14 @@
+.git
+.venv
+venv
+__pycache__
+*.pyc
+.env
+instance/
+data/water_quality_dataset.csv
+data/water_quality_model.pkl
+data/model_metrics.json
+static/uploads/*
+!static/uploads/.gitkeep
+static/reports/*
+!static/reports/.gitkeep
